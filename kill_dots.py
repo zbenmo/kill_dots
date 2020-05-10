@@ -88,7 +88,8 @@ def apply(dir_with_tif_files, mdoc_file, target_dir):
         output_file.write(''.join(mdoc_lines_renamed))
 
     for tif in interesting_tifs:
-        shutil.copy(folder / tif, rename_file(tif, target_folder))
+        pathlib.Path(rename_file(tif, target_folder)).symlink_to(folder / tif)   
+        # shutil.copy(folder / tif, rename_file(tif, target_folder))
 
     print(f"Please verify, for example with 'ls {target_folder}'")
 

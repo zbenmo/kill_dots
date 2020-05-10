@@ -1,4 +1,4 @@
-kill_dots.py - utility for passing files from Dynamo to EMAN
+kill_dots.py - utility for renaming files named with '.' in SerialEM to EMAN
 ============================================================
 
 zbenmo@gmail.com (Oren)
