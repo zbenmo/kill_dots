@@ -15,16 +15,36 @@ Try:
 
 Python 3.8.2
 
+Or even better:
+
+> which python3
+
+To make sure 'python3' is available.
+
+Or:
+
+> module load ..
+
+(to load python 3, if you are using the 'module' Linux framework)
+
 ---
 
 Also a package or few are needed. Usually a virtual environment is used to install packages.
 For example:
 
-> python -m venv env  
+> python3 -m venv env  
 > ./env/bin/activate  
 > pip install -r requirements.txt
 
-Or similar. Make sure the right python version is used above.
+Or similar. Make sure the right python version is used above (if you can use python3 in the command above it will keep you safe).
+
+The environment is now active and the requirements are available.
+
+Remember that the next time you want to use the script, having closed the session above, you need to activate the environment first.
+
+> ./env/bin/activate  
+
+This will also make sure the the right python is used (and that the requirements are available).
 
 ---
 
