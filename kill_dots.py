@@ -15,19 +15,24 @@ def rename_file(name: str, target_folder: pathlib.Path) -> str:
     return str(target_folder / name.replace('.', '_').replace('_tif', '.tif'))
 
 
+PATTERN_OF_TIF_FILE = "*.tif"
+PATTERN_OF_MDOC_FILE = "*.mdoc"
+RESULTS_FOLDER_NAME = "4motcor"
+
+
 @main.command()
 @click.argument('dir_with_tif_files', type=click.Path(exists=True))
 def examine(dir_with_tif_files):
     folder = pathlib.Path(dir_with_tif_files)
     print(f'tifs folder={folder}')
 
-    tifs = set(folder.glob('*.tif'))
+    tifs = set(folder.glob(PATTERN_OF_TIF_FILE))
 
     print(f'{len(tifs)} tif files in {folder}')
 
     parent_folder = folder.resolve().parent
 
-    for mdoc in parent_folder.glob("*.st.mdoc"):
+    for mdoc in parent_folder.glob(PATTERN_OF_MDOC_FILE):
 
         print()
         print(mdoc)
@@ -55,17 +60,17 @@ def apply(dir_with_tif_files):
     folder = pathlib.Path(dir_with_tif_files)
     print(f'tifs folder={folder}')
 
-    tifs = set(folder.glob('*.tif'))
+    tifs = set(folder.glob(PATTERN_OF_TIF_FILE))
 
     print(f'{len(tifs)} tif files in {folder}')
 
     parent_folder = folder.resolve().parent  # where to find 'mdoc' files
 
-    target_folder = folder / '4motcor'  # name for the folder with the outputs
+    target_folder = folder / RESULTS_FOLDER_NAME  # name for the folder with the outputs
 
     target_folder.mkdir(exist_ok=True)
 
-    for mdoc in parent_folder.glob("*.st.mdoc"):
+    for mdoc in parent_folder.glob(PATTERN_OF_MDOC_FILE):
 
         print()
         print(mdoc)
@@ -97,7 +102,7 @@ def apply(dir_with_tif_files):
             output_file.write(''.join(mdoc_lines_renamed))
 
         for tif in interesting_tifs:
-            pathlib.Path(rename_file(tif, target_folder)).symlink_to(folder / tif)   
+            pathlib.Path(rename_file(tif, target_folder)).symlink_to((folder / tif).absolute())   
             # shutil.copy(folder / tif, rename_file(tif, target_folder))
 
     print(f"Please verify, for example with 'ls {target_folder}'")
